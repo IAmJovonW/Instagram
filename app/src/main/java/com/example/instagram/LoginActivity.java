@@ -26,21 +26,34 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        etUsername = findViewById(R.id.etUsername);
-        etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                login(username ,password);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            // do stuff with the user
+            goMainActivity();
+        } else {
+            // show the signup or login screen
 
-            }
-        });
+
+            etUsername = findViewById(R.id.etUsername);
+            etPassword = findViewById(R.id.etPassword);
+            btnLogin = findViewById(R.id.btnLogin);
+            btnLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String username = etUsername.getText().toString();
+                    String password = etPassword.getText().toString();
+                    login(username, password);
+
+                }
+            });
+        }
     }
 
+
+
     private void login(String username, String password) {
+
+
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
@@ -58,6 +71,9 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+
+
 
     private void goMainActivity() {
         Log.d(TAG,  "Navigating to Main Activity");
