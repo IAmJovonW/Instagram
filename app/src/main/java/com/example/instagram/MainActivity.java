@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment = new Fragment();
                 switch (item.getItemId()) {
                     case R.id.action_home:
-                        //TODO: swap fragment here
                         fragment = new PostsFragment();
                         //Toast.makeText(MainActivity.this, "Home!", Toast.LENGTH_SHORT).show();
                         break;
