@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,11 +24,16 @@ import java.util.List;
 
 public class PostsFragment extends Fragment {
     public static String TAG = "PostsFragment";
+    private SwipeRefreshLayout swipeContainer;
 
     private RecyclerView rvPost;
     protected PostAdapter adapter;
     protected List<Post> mPost;
     //onCreateView to inflate the view
+
+
+
+
 
 
     @Nullable
@@ -38,6 +44,28 @@ public class PostsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                queryPosts();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+
+
         rvPost = view.findViewById(R.id.rvPosts);
 
         //create the data source
@@ -66,7 +94,7 @@ public class PostsFragment extends Fragment {
                     e.printStackTrace();
                     return;
                 }
-
+                adapter.clear();
                 mPost.addAll(posts);
                 adapter.notifyDataSetChanged();
                 for(int i = 0; i < posts.size(); i++){
@@ -77,3 +105,4 @@ public class PostsFragment extends Fragment {
         });
     }
 }//End of PostsFragment class
+
