@@ -1,6 +1,6 @@
 # Project 3 - *ParseInstagram*
 
-**Name of your app** is a photo sharing app similar to Instagram but using Parse as its backend.
+**Instagram** is a photo sharing app similar to Instagram but using Parse as its backend.
 
 Time spent: **8** hours spent in total
 
